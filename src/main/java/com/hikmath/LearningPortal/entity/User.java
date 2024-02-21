@@ -5,6 +5,9 @@ import lombok.Setter;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 @Getter
@@ -23,5 +26,6 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Course> courses=new ArrayList<>();
 }
