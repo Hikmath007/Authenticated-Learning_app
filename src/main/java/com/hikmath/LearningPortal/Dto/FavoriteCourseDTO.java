@@ -5,16 +5,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Collector;
-
 @Getter
 @Setter
 @NoArgsConstructor
 
-public class CourseDTO {
+public class FavoriteCourseDTO {
 
-    private Long courseId;
+    private Long favoriteId;
 
     private String title;
 
@@ -23,7 +20,7 @@ public class CourseDTO {
     private Date addedDate;
 
     private CategoryDTO category;
-    
+
     private UserDTO user;
 
 

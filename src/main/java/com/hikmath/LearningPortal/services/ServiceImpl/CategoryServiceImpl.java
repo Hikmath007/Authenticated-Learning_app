@@ -33,6 +33,7 @@ public class CategoryServiceImpl implements CategoryService {
         Category cat = this.categoryRepository.findById(categoryId).
                 orElseThrow(()->new ResourceNotFoundException("Category","categoryId",categoryId));
         //once we find a category by its id , we should set title a description
+
         cat.setCategoryTitle(categoryDTO.getCategoryTitle());
         cat.setCategoryDescription(categoryDTO.getCategoryDescription());
         Category updatedcat= this.categoryRepository.save(cat);

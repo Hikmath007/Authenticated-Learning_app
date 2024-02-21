@@ -8,27 +8,27 @@ import java.util.List;
 public interface CourseService {
 
     //create
-    Course createCourse(CourseDTO courseDTO, Long userId,Long categoryId);
+    CourseDTO createCourse(CourseDTO courseDTO, Long userId,Long categoryId);
 
     //Update
-    Course updateCourse(CourseDTO courseDTO, Long courseId);
+    CourseDTO updateCourse(CourseDTO courseDTO, Long courseId);
 
     //delete
 
     void   deleteCourse(Long courseId);
 
     //get all course
-    List<Course>getAllCourse();
+    List<CourseDTO>getAllCourse();
 
     //get coursebyID
-    Course getCourseById(Long courseId);
+    CourseDTO getCourseById(Long courseId);
 
 
     //getallCourseBYCategory
-    List<Course>getCoursesByCategory(Long categoryId);
+    List<CourseDTO>getCoursesByCategory(Long categoryId);
 
     //get allcourses by user
-    List<Course>getCoursesByUser(Long userId);
+    List<CourseDTO>getCoursesByUser(Long userId);
 //searchpost
     List<Course>searchCourses(String keyword);
 

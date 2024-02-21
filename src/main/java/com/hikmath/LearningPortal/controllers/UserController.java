@@ -1,6 +1,8 @@
 package com.hikmath.LearningPortal.controllers;
 
 import com.hikmath.LearningPortal.Dto.ApiResponse;
+import com.hikmath.LearningPortal.Dto.CategoryDTO;
+import com.hikmath.LearningPortal.Dto.CourseDTO;
 import com.hikmath.LearningPortal.Dto.UserDTO;
 import com.hikmath.LearningPortal.services.UserService;
 import jakarta.validation.Valid;
@@ -51,4 +53,5 @@ public class UserController {
     public ResponseEntity<UserDTO>getUserById(@PathVariable long userId) {
         return ResponseEntity.ok(this.userService.getUserById(userId));
     }
+
 }

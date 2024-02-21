@@ -7,31 +7,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
-
 @Entity
-@Table(name = "courses")
+@Table(name = "favcourses")
 @Getter
 @Setter
 @NoArgsConstructor
 
-public class Course {
+public class FavoriteCourse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long courseId;
+    private Long favoriteId;
 
-    @Column(name = "course_title")
-    private String title;
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    private Course course;
 
-    private String details;
-
-    private Date addedDate;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @ManyToOne
     private Category category;
-
-    @ManyToOne
-    private User user;
-
-
 }
