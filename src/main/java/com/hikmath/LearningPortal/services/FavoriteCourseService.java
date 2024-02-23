@@ -1,4 +1,4 @@
 package com.hikmath.LearningPortal.services;
 
-public interface FavoriteCourseService {
+public class FavoriteCourseService {
 }

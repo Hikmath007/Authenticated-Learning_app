@@ -1,18 +1,16 @@
 package com.hikmath.LearningPortal.Dto;
 
+import lombok.*;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class CategoryDTO {
 
-    private Long categoryId;
+    private String categoryId;
 
     private String categoryTitle;
 
-    private String CategoryDescription;
+    private String categoryDescription;
+
 }

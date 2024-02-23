@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collector;
 
 @Getter
 @Setter
@@ -14,7 +13,7 @@ import java.util.stream.Collector;
 
 public class CourseDTO {
 
-    private Long courseId;
+    private String courseId;
 
     private String title;
 
@@ -23,7 +22,7 @@ public class CourseDTO {
     private Date addedDate;
 
     private CategoryDTO category;
-    
+
     private UserDTO user;
 
 

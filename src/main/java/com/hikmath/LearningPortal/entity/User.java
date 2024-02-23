@@ -4,6 +4,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,17 +16,20 @@ import java.util.List;
 @NoArgsConstructor
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(generator = "user_id_generator")
+    @GenericGenerator(name = "user_id_generator", strategy = "com.hikmath.LearningPortal.entity.CustomUserIdGenerator")
 
-    @Column( nullable = false)
+    private String id;
+
     private String name;
 
     private String email;
 
-    @Column(nullable = false)
     private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Course> courses=new ArrayList<>();
+
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private List<FavoriteCourse> favoriteCourses = new ArrayList<>();
 }

@@ -7,8 +7,15 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+
 public class ApiResponse {
-    private String Message;
+    private String message;
     private boolean success;
+
+    // Add this constructor
+    public ApiResponse(String message, boolean success) {
+        this.message = message;
+        this.success = success;
+    }
 }
+

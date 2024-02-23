@@ -16,38 +16,40 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    
     //create
     @PostMapping("/")
     public ResponseEntity<CategoryDTO> createCategory( @RequestBody CategoryDTO categoryDTO){
-        CategoryDTO createCategoryDTO = this.categoryService.createCategory(categoryDTO);
+        CategoryDTO createCategoryDTO = categoryService.createCategory(categoryDTO);
         return new ResponseEntity<>(createCategoryDTO, HttpStatus.CREATED);
     }
 
-    //  update
+
     @PutMapping("/catId")
-    public ResponseEntity<CategoryDTO> updateCategory( @RequestBody CategoryDTO categoryDTO, @PathVariable Long catId )
+    public ResponseEntity<CategoryDTO> updateCategory( @RequestBody CategoryDTO categoryDTO, @PathVariable String catId )
     {
-        CategoryDTO updateCategory = this.categoryService.updateCategory(categoryDTO,catId);
-        return new ResponseEntity<CategoryDTO>(updateCategory, HttpStatus.OK);
+        CategoryDTO updateCategory = categoryService.updateCategory(categoryDTO,catId);
+        return new ResponseEntity<>(updateCategory, HttpStatus.OK);
     }
-    //delete
+//    //delete
     @DeleteMapping("/catId")
-    public ResponseEntity<ApiResponse> deleteCategory( @PathVariable Long catId )
+    public ResponseEntity<ApiResponse> deleteCategory( @PathVariable String catId )
     {
-         this.categoryService.deleteCategory(catId);
-        return new ResponseEntity<ApiResponse>(new ApiResponse("category successfully deleted", true), HttpStatus.OK);
+         categoryService.deleteCategory(catId);
+         ApiResponse apiResponse = new ApiResponse("category successfully deleted", true);
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
     //getone category
 
     @GetMapping("/{catId}")
-    public ResponseEntity<CategoryDTO>getCategory(@PathVariable long catId) {
-        return ResponseEntity.ok(this.categoryService.getCategory(catId));
+    public ResponseEntity<CategoryDTO>getCategory(@PathVariable String catId) {
+        return ResponseEntity.ok(categoryService.getCategory(catId));
     }
 
     //getcategories
 
     @GetMapping("/")
     public ResponseEntity<List<CategoryDTO>>getCategories() {
-        return ResponseEntity.ok(this.categoryService.getCategories());
+        return ResponseEntity.ok(categoryService.getCategories());
     }
 }

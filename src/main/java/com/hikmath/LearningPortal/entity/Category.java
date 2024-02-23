@@ -17,16 +17,17 @@ import java.util.List;
 @NoArgsConstructor
 
 public class Category {
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long categoryId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_sequence")
+    @SequenceGenerator(name = "category_sequence", sequenceName = "your_category_sequence_name", allocationSize = 1)
+    private String categoryId;
 
-@Column(name="title")
-private String categoryTitle;
+    @Column(name = "title")
+    private String categoryTitle;
 
-@Column(name = "description")
-private String categoryDescription;
+    @Column(name = "description")
+    private String categoryDescription;
 
-@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-private List<Course> courses=new ArrayList<>();
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Course> courses = new ArrayList<>();
 }
