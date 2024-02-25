@@ -9,13 +9,14 @@ import com.hikmath.LearningPortal.mapper.CourseMapper;
 import com.hikmath.LearningPortal.repository.CategoryRepository;
 import com.hikmath.LearningPortal.repository.CourseRepository;
 import com.hikmath.LearningPortal.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
+
+@Slf4j
 @Service
 public class CourseService {
 
@@ -29,21 +30,26 @@ public class CourseService {
     private CourseMapper courseMapper;
 
     public CourseDTO createCourse(CourseDTO courseDTO, String userId, String categoryId) {
-        //first fetch userbyid
-        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", " UserId ", userId));
+        log.info("Creating a new course...");
+        userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", " UserId ", userId));
 
-        Category cat = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category", "categoryId", categoryId));
+        log.info("User found: {}", userId);
+
+        categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category", "categoryId", categoryId));
 
 
         Course course = courseMapper.toEntity(courseDTO);//we will return this below
+        log.info("Converted Course: {}", course);
+
         Course newCourse = courseRepository.save(course);
+        log.info("Saving the new course to the database...");
         return courseMapper.toDto(newCourse);
     }
 
 
     public CourseDTO updateCourse(CourseDTO courseDTO, String courseId) {
-        Course course = courseRepository.findById(courseId).orElseThrow(() -> new ResourceNotFoundException("CourseMapper", "courseid", courseId));
-        Course courses=courseMapper.toEntity(courseDTO);
+        courseRepository.findById(courseId).orElseThrow(() -> new ResourceNotFoundException("CourseMappe", "courseid", courseId));
+        Course courses = courseMapper.toEntity(courseDTO);
         Course updatedCourse = courseRepository.save(courses);
         return courseMapper.toDto(updatedCourse);
 
@@ -57,7 +63,7 @@ public class CourseService {
 
     public List<CourseDTO> getAllCourse() {
         List<Course> allCourses = courseRepository.findAll();
-        return allCourses.stream().map(course -> courseMapper.toDto(course)).collect(Collectors.toList());
+        return allCourses.stream().map(course -> courseMapper.toDto(course)).toList();
     }
 
 
@@ -72,22 +78,15 @@ public class CourseService {
         Category cat = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category", "category id", categoryId));
         List<Course> courses = courseRepository.findByCategory(cat);
 
-        // let's change the data from course to coursed to by using modelmapper
-
-        List<CourseDTO> courseDTOS = courses.stream().map((course) -> courseMapper.toDto(course)).collect(Collectors.toList());
-        return courseDTOS;
+        return courses.stream().map(course -> courseMapper.toDto(course)).toList();
     }
 
 
     public List<CourseDTO> getCoursesByUser(String userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "user id", userId));
         List<Course> courses = courseRepository.findByUser(user);
-        List<CourseDTO> courseDTOS = courses.stream().map(course -> courseMapper.toDto(course)).collect(Collectors.toList());
-        return courseDTOS;
+        return courses.stream().map(course -> courseMapper.toDto(course)).toList();
     }
 
 
-    public List<Course> searchCourses(String keyword) {
-        return null;
-    }
 }

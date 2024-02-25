@@ -1,21 +1,19 @@
 package com.hikmath.LearningPortal.Dto;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
+@Slf4j
 
 public class ApiResponse {
     private String message;
     private boolean success;
 
-    // Add this constructor
     public ApiResponse(String message, boolean success) {
         this.message = message;
         this.success = success;
+        log.info("ApiResponse created - Message: {}, Success: {}", message, success);
     }
 }
 

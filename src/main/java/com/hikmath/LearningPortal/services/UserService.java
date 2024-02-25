@@ -1,7 +1,6 @@
 package com.hikmath.LearningPortal.services;
 
 import com.hikmath.LearningPortal.Dto.UserDTO;
-import com.hikmath.LearningPortal.entity.Category;
 import com.hikmath.LearningPortal.entity.User;
 import com.hikmath.LearningPortal.exceptions.ResourceNotFoundException;
 import com.hikmath.LearningPortal.mapper.UserMapper;
@@ -26,6 +25,8 @@ public class UserService {
     public UserDTO createUser(UserDTO userDTO) {
         log.info("Creating user: {}", userDTO);
         User user = userMapper.toEntity(userDTO);
+        log.info("Converted User: {}", user);
+
 
         User savedUser = userRepository.save(user);
         return userMapper.toDto(savedUser);
@@ -33,13 +34,19 @@ public class UserService {
     }
 
     public UserDTO updateUser(UserDTO userDTO, String userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
-        User users=userMapper.toEntity(userDTO);
+        userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
+        User users = userMapper.toEntity(userDTO);
+        log.info("Updated User: {}", users);
+
         User updatedUser = userRepository.save(users);
+        log.info("Updated User saved: {}", updatedUser);
+
         return userMapper.toDto(updatedUser);
     }
 
     public UserDTO getUserById(String userId) {
+        log.info("Fetching user with ID: {}", userId);
+
         User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
         return userMapper.toDto(user);
     }

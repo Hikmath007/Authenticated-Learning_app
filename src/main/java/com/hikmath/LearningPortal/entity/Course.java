@@ -1,12 +1,13 @@
 package com.hikmath.LearningPortal.entity;
 
-
-import jakarta.persistence.Entity;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Date;
+
 
 @Entity
 @Table(name = "courses")
@@ -15,11 +16,11 @@ import java.util.Date;
 @Setter
 public class Course {
     @Id
-    @GeneratedValue(generator = "course_id_generator")
-    @GenericGenerator(name = "course_id_generator", strategy = "com.hikmath.LearningPortal.entity.CustomCourseIdGenerator")
+    @GenericGenerator(name = "course_id", strategy = "com.hikmath.LearningPortal.entity.customCourseIdGenerator")
+    @GeneratedValue(generator = "course_id")
+
     @Column(name = "course_id")
     private String courseId;
-
 
     @Column(name = "course_title")
     private String title;
@@ -27,7 +28,6 @@ public class Course {
     private String details;
 
     private Date addedDate;
-
 
     @ManyToOne
     private Category category;

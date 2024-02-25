@@ -17,13 +17,10 @@ public class CourseController {
     @Autowired
     private CourseService courseService; //TO CREATE COURSE WE NEED SERVICE
 
-    //create
-    @PostMapping("/users/{userid}/categories/{categoriesid}/courses")
-    public ResponseEntity<CourseDTO> createCourse(
-            @RequestBody CourseDTO courseDTO,
-            @PathVariable String userId,
-            @PathVariable String categoryId) {
-        CourseDTO createCourse = courseService.createCourse(courseDTO, userId, categoryId);
+
+    @PostMapping("/users/{user_id}/categories/{cat_id}/courses")
+    public ResponseEntity<CourseDTO> createCourse(@RequestBody CourseDTO courseDTO, @PathVariable String user_id, @PathVariable String cat_id) {
+        CourseDTO createCourse = courseService.createCourse(courseDTO, user_id, cat_id);
         return new ResponseEntity<CourseDTO>(createCourse, HttpStatus.CREATED);
     }
 
@@ -34,7 +31,7 @@ public class CourseController {
         List<CourseDTO> courses = courseService.getCoursesByUser(userId);
         return new ResponseEntity<>(courses, HttpStatus.OK);
     }
-// get coursesby category
+
 
     @GetMapping("/categories/{catId}/courses")
     public ResponseEntity<List<CourseDTO>> getCoursesByCategory(@PathVariable String catId) {
@@ -42,8 +39,6 @@ public class CourseController {
         List<CourseDTO> courses = courseService.getCoursesByCategory(catId);
         return new ResponseEntity<>(courses, HttpStatus.OK);
     }
-
-    //get allcourses
 
     @GetMapping("/courses")
     public ResponseEntity<List<CourseDTO>> getAllCourse() {

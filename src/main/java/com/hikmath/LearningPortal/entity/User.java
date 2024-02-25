@@ -1,10 +1,12 @@
 package com.hikmath.LearningPortal.entity;
+
+import jakarta.persistence.*;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.*;
 
-import jakarta.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,20 +18,21 @@ import java.util.List;
 @NoArgsConstructor
 public class User {
     @Id
-    @GeneratedValue(generator = "user_id_generator")
-    @GenericGenerator(name = "user_id_generator", strategy = "com.hikmath.LearningPortal.entity.CustomUserIdGenerator")
+    @GenericGenerator(name = "user_id", strategy = "com.hikmath.LearningPortal.entity.customUserIdGenerator")
+    @GeneratedValue(generator = "user_id")
 
+    @Column(name = "user_id")
     private String id;
 
     private String name;
 
     private String email;
 
+
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Course> courses=new ArrayList<>();
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Course> courses = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private List<FavoriteCourse> favoriteCourses = new ArrayList<>();
+
 }
