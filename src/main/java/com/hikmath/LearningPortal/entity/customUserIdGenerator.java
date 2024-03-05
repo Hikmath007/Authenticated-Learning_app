@@ -18,7 +18,6 @@ public class customUserIdGenerator implements IdentifierGenerator {
     public Object generate(SharedSessionContractImplementor session, Object object) {
 
         String prefix = "user_";
-         session.getJdbcConnectionAccess();
 
         try {
             JdbcConnectionAccess jdbcConnectionAccess = session.getJdbcConnectionAccess();

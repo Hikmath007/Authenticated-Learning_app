@@ -1,11 +1,15 @@
 package com.hikmath.LearningPortal.services;
 
+import com.hikmath.LearningPortal.Dto.CategoryDTO;
 import com.hikmath.LearningPortal.Dto.CourseDTO;
+import com.hikmath.LearningPortal.Dto.UserDTO;
 import com.hikmath.LearningPortal.entity.Category;
 import com.hikmath.LearningPortal.entity.Course;
 import com.hikmath.LearningPortal.entity.User;
 import com.hikmath.LearningPortal.exceptions.ResourceNotFoundException;
+import com.hikmath.LearningPortal.mapper.CategoryMapper;
 import com.hikmath.LearningPortal.mapper.CourseMapper;
+import com.hikmath.LearningPortal.mapper.UserMapper;
 import com.hikmath.LearningPortal.repository.CategoryRepository;
 import com.hikmath.LearningPortal.repository.CourseRepository;
 import com.hikmath.LearningPortal.repository.UserRepository;
@@ -28,24 +32,30 @@ public class CourseService {
     private UserRepository userRepository;
     @Autowired
     private CourseMapper courseMapper;
+    @Autowired
+    private CategoryMapper categoryMapper;
+    @Autowired
+    private UserMapper userMapper;
 
     public CourseDTO createCourse(CourseDTO courseDTO, String userId, String categoryId) {
         log.info("Creating a new course...");
-        userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", " UserId ", userId));
+        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", " UserId ", userId));
+        UserDTO userDTO = userMapper.toDto(user);
 
         log.info("User found: {}", userId);
 
-        categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category", "categoryId", categoryId));
-
+        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category", "categoryId", categoryId));
+        CategoryDTO categoryDTO = categoryMapper.toDto(category);
 
         Course course = courseMapper.toEntity(courseDTO);//we will return this below
         log.info("Converted Course: {}", course);
 
         Course newCourse = courseRepository.save(course);
-        log.info("Saving the new course to the database...");
-        return courseMapper.toDto(newCourse);
+        CourseDTO newCourseDto = courseMapper.toDto(newCourse);
+        newCourseDto.setCategory(categoryDTO);
+        newCourseDto.setUser(userDTO);
+        return newCourseDto;
     }
-
 
     public CourseDTO updateCourse(CourseDTO courseDTO, String courseId) {
         courseRepository.findById(courseId).orElseThrow(() -> new ResourceNotFoundException("CourseMappe", "courseid", courseId));
@@ -88,5 +98,8 @@ public class CourseService {
         return courses.stream().map(course -> courseMapper.toDto(course)).toList();
     }
 
+    public int getTotalCategories() {
+        return courseRepository.countCategories();
+    }
 
 }

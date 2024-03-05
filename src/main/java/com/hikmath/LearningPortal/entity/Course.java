@@ -29,7 +29,7 @@ public class Course {
 
     private Date addedDate;
 
-    @ManyToOne
+    @ManyToOne (cascade = CascadeType.ALL)
     private Category category;
 
     @ManyToOne

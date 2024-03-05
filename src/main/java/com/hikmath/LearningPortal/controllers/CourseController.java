@@ -66,6 +66,10 @@ public class CourseController {
         CourseDTO updatedCourse = courseService.updateCourse(courseDTO, courseId);
         return new ResponseEntity<>(updatedCourse, HttpStatus.OK);
     }
+    @GetMapping("/categoryCount")
+    public int getCategoryCount() {
+        return courseService.getTotalCategories();
+    }
 }
 
 
